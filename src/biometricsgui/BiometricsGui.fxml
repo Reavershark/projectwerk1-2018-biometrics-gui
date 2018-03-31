@@ -1,13 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.chart.CategoryAxis?>
 <?import javafx.scene.chart.LineChart?>
 <?import javafx.scene.chart.NumberAxis?>
-<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.chart.PieChart?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
 
-<AnchorPane id="AnchorPane" prefHeight="500" prefWidth="800" xmlns="http://javafx.com/javafx/8.0.162" xmlns:fx="http://javafx.com/fxml/1" fx:controller="biometricsgui.BiometricsGuiController">
+
+<GridPane prefHeight="532.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.162" xmlns:fx="http://javafx.com/fxml/1" fx:controller="biometricsgui.BiometricsGuiController">
+   <columnConstraints>
+      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="50.0" />
+      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="50.0" prefWidth="100.0" />
+   </columnConstraints>
+   <rowConstraints>
+      <RowConstraints maxHeight="369.0" minHeight="10.0" percentHeight="50.0" prefHeight="321.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="260.0" minHeight="10.0" percentHeight="50.0" prefHeight="211.0" vgrow="SOMETIMES" />
+   </rowConstraints>
    <children>
-      <LineChart fx:id="chart" layoutX="82.0" layoutY="89.0" prefHeight="322.0" prefWidth="556.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <PieChart fx:id="mqttChart" prefHeight="250.0" prefWidth="400.0" title="Biometric stations" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+      <LineChart fx:id="temperatureChart" prefHeight="235.0" prefWidth="399.0" title="Temperature (°C)">
         <xAxis>
           <NumberAxis side="BOTTOM" />
         </xAxis>
@@ -15,5 +27,21 @@
           <NumberAxis side="LEFT" />
         </yAxis>
       </LineChart>
+      <LineChart fx:id="heartRateChart" prefHeight="250.0" prefWidth="400.0" title="Heart rate (Bpm)" GridPane.columnIndex="1">
+         <xAxis>
+            <NumberAxis side="BOTTOM" />
+         </xAxis>
+         <yAxis>
+            <NumberAxis side="LEFT" />
+         </yAxis>
+      </LineChart>
+      <LineChart fx:id="accelerationChart" prefHeight="250.0" prefWidth="400.0" title="Acceleration (m/s²)" GridPane.rowIndex="1">
+         <xAxis>
+            <NumberAxis side="BOTTOM" />
+         </xAxis>
+         <yAxis>
+            <NumberAxis side="LEFT" />
+         </yAxis>
+      </LineChart>
    </children>
-</AnchorPane>
+</GridPane>

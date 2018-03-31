@@ -95,7 +95,7 @@ public class MqttChatService implements MqttCallback {
             Logger.getLogger(MqttChatService.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
+    
     @Override
     public void connectionLost(Throwable thrwbl) {
         System.out.println("Lost connection with broker");
