@@ -28,9 +28,7 @@ import javafx.scene.chart.XYChart;
 import javafx.scene.chart.XYChart.Data;
 
 public class Station {
-    
-    private SeriesManager manager;
-    
+
     private XYChart.Series temperature;
     private XYChart.Series heartRate;
     private XYChart.Series xAcceleration;
@@ -40,8 +38,7 @@ public class Station {
     
     private String name;
     
-    public Station(String name) {
-        manager = new SeriesManager();
+    public Station(String name, SeriesManager manager) {
         this.name = name;
         
         temperature = manager.createTemperatureSeries(name);

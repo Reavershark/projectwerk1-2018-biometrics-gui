@@ -23,25 +23,36 @@
  */
 package biometricsgui;
 
-import chatservice.MqttChatService;
+import chatservice.MqttService;
 import com.google.gson.Gson;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.chart.LineChart;
+import javafx.scene.chart.PieChart;
 
-public class BiometricsGuiController implements Initializable, MqttChatService.IMqttMessageHandler {
+public class BiometricsGuiController implements Initializable, MqttService.IMqttMessageHandler {
     
-    private MqttChatService chatService;
+    @FXML private LineChart temperatureChart;
+    @FXML private LineChart heartRateChart;
+    @FXML private LineChart accelerationChart;
+    @FXML private PieChart mqttChart;
+    
+    private MqttService chatService;
     private Gson gson = new Gson();
+    private SeriesManager manager;
     
     private ArrayList<Station> stations;
     private int index = 0;
       
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        chatService = new MqttChatService();
+        chatService = new MqttService();
         chatService.setMessageHandler(this);
+        manager = new SeriesManager(temperatureChart, heartRateChart, accelerationChart, mqttChart);
+        stations = new ArrayList<>();
     }
     
     @Override
@@ -49,14 +60,15 @@ public class BiometricsGuiController implements Initializable, MqttChatService.I
         BiometricData data = gson.fromJson(message, BiometricData.class);
         if (getStation(data.getName()) == null) {
             System.out.println("New station detected!");
-            stations.add(new Station(data.getName()));
+            stations.add(new Station(data.getName(), manager));
         }
         Station station = getStation(data.getName());
         station.addData(data, index);
+        index++;
     }
     
     private Station getStation(String name) {
-        for (int i = 0; i < stations.size(); i++) {
+        for (int i = 0; i < 0; i++) {
             if (stations.get(i).getName().equals(name)) {
                 return stations.get(i);
             }

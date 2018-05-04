@@ -23,7 +23,6 @@
  */
 package biometricsgui;
 
-import javafx.fxml.FXML;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.PieChart;
 import javafx.scene.chart.PieChart.Data;
@@ -31,10 +30,17 @@ import javafx.scene.chart.XYChart.Series;
 
 public class SeriesManager {
     
-    @FXML private LineChart temperatureChart;
-    @FXML private LineChart heartRateChart;
-    @FXML private LineChart accelerationChart;
-    @FXML private PieChart mqttChart;
+    private LineChart temperatureChart;
+    private LineChart heartRateChart;
+    private LineChart accelerationChart;
+    private PieChart mqttChart;
+    
+    SeriesManager(LineChart temperatureChart, LineChart heartRateChart, LineChart accelerationChart, PieChart mqttChart) {
+        this.temperatureChart = temperatureChart;
+        this.heartRateChart = heartRateChart;
+        this.accelerationChart = accelerationChart;
+        this.mqttChart = mqttChart;
+    }
     
     public Series createTemperatureSeries(String name) {
         Series series = new Series();
