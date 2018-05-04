@@ -68,7 +68,7 @@ public class BiometricsGuiController implements Initializable, MqttService.IMqtt
     }
     
     private Station getStation(String name) {
-        for (int i = 0; i < 0; i++) {
+        for (int i = 0; i < stations.size(); i++) {
             if (stations.get(i).getName().equals(name)) {
                 return stations.get(i);
             }

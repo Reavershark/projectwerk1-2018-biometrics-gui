@@ -93,6 +93,7 @@ public class MqttService implements MqttCallback {
             client.close();
         } catch (MqttException ex) {
             Logger.getLogger(MqttService.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
         }
     }
     

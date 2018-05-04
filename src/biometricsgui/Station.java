@@ -43,9 +43,9 @@ public class Station {
         
         temperature = manager.createTemperatureSeries(name);
         heartRate = manager.createHeartRateSeries(name);
-        xAcceleration = manager.createAccelerationSeries(name);
-        yAcceleration = manager.createAccelerationSeries(name);
-        zAcceleration = manager.createAccelerationSeries(name);
+        xAcceleration = manager.createAccelerationSeries(name + " x");
+        yAcceleration = manager.createAccelerationSeries(name + " y");
+        zAcceleration = manager.createAccelerationSeries(name + " z");
         mqttData = manager.createMqttData(name);
     }
 
@@ -54,13 +54,14 @@ public class Station {
     }
     
     public void addData(BiometricData data, int x) {
-        if (data.getName() != name) {
+        if (!data.getName().equals(name)) {
             return;
         }
         temperature.getData().add(new Data(x, data.getTemperature()));
-        xAcceleration.getData().add(new Data(x, data.getTemperature()));
-        yAcceleration.getData().add(new Data(x, data.getTemperature()));
-        zAcceleration.getData().add(new Data(x, data.getTemperature()));
+        xAcceleration.getData().add(new Data(x, data.getAcceleration().getXAcceleration()));
+        yAcceleration.getData().add(new Data(x, data.getAcceleration().getYAcceleration()));
+        zAcceleration.getData().add(new Data(x, data.getAcceleration().getYAcceleration()));
+        heartRate.getData().add(new Data(x, data.getHeartRate()));
         mqttData.setPieValue(mqttData.getPieValue() + 1);
     }
 }

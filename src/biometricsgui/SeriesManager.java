@@ -23,6 +23,7 @@
  */
 package biometricsgui;
 
+import javafx.application.Platform;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.PieChart;
 import javafx.scene.chart.PieChart.Data;
@@ -45,24 +46,40 @@ public class SeriesManager {
     public Series createTemperatureSeries(String name) {
         Series series = new Series();
         series.setName(name);
-        temperatureChart.getData().add(series);
+        Platform.runLater(new Runnable() {
+            @Override public void run() {
+               temperatureChart.getData().add(series);
+            }
+        });
         return series;
     }
     public Series createHeartRateSeries(String name) {
         Series series = new Series();
         series.setName(name);
-        heartRateChart.getData().add(series);
+        Platform.runLater(new Runnable() {
+            @Override public void run() {
+               heartRateChart.getData().add(series);
+            }
+        });
         return series;
     }
     public Series createAccelerationSeries(String name) {
         Series series = new Series();
         series.setName(name);
-        accelerationChart.getData().add(series);
+        Platform.runLater(new Runnable() {
+            @Override public void run() {
+               accelerationChart.getData().add(series);
+            }
+        });
         return series;
     }
     public Data createMqttData(String name) {
         Data data = new Data(name, 0);
-        mqttChart.getData().add(data);
+        Platform.runLater(new Runnable() {
+            @Override public void run() {
+               mqttChart.getData().add(data);
+            }
+        });
         return data;
     }
 }
