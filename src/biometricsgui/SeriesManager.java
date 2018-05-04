@@ -23,33 +23,40 @@
  */
 package biometricsgui;
 
+import javafx.fxml.FXML;
 import javafx.scene.chart.LineChart;
+import javafx.scene.chart.PieChart;
+import javafx.scene.chart.PieChart.Data;
 import javafx.scene.chart.XYChart.Series;
 
 public class SeriesManager {
     
-    public Series createTemperatureSeries(String name, LineChart chart) {
+    @FXML private LineChart temperatureChart;
+    @FXML private LineChart heartRateChart;
+    @FXML private LineChart accelerationChart;
+    @FXML private PieChart mqttChart;
+    
+    public Series createTemperatureSeries(String name) {
         Series series = new Series();
         series.setName(name);
-        chart.getData().add(series);
+        temperatureChart.getData().add(series);
         return series;
     }
-    public Series createHeartRateSeries(String name, LineChart chart) {
+    public Series createHeartRateSeries(String name) {
         Series series = new Series();
         series.setName(name);
-        chart.getData().add(series);
+        heartRateChart.getData().add(series);
         return series;
     }
-    public Series createAccelerationSeries(String name, LineChart chart) {
+    public Series createAccelerationSeries(String name) {
         Series series = new Series();
         series.setName(name);
-        chart.getData().add(series);
+        accelerationChart.getData().add(series);
         return series;
     }
-    public Series createMqttSeries(String name, LineChart chart) {
-        Series series = new Series();
-        series.setName(name);
-        chart.getData().add(series);
-        return series;
+    public Data createMqttData(String name) {
+        Data data = new Data(name, 0);
+        mqttChart.getData().add(data);
+        return data;
     }
 }

@@ -1,7 +1,7 @@
 /*
  * The MIT License
  *
- * Copyright (c) 2018 Jonas Meeuws, Jonas Van Dycke
+ * Copyright 2018 jonas.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -23,26 +23,31 @@
  */
 package biometricsgui;
 
-import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.stage.Stage;
+import javafx.scene.chart.PieChart;
+import javafx.scene.chart.XYChart;
 
-public class BiometricsGui extends Application {
-
-    @Override
-    public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("BiometricsGui.fxml"));
-
-        Scene scene = new Scene(root);
-
-        stage.setScene(scene);
-        stage.show();
+public class Station {
+    
+    SeriesManager manager;
+    
+    XYChart.Series temperature;
+    XYChart.Series heartRate;
+    XYChart.Series xAcceleration;
+    XYChart.Series yAcceleration;
+    XYChart.Series zAcceleration;
+    PieChart.Data mqttData;
+    
+    String name;
+    
+    public Station(String name) {
+        manager = new SeriesManager();
+        this.name = name;
+        
+        temperature = manager.createTemperatureSeries(name);
+        heartRate = manager.createHeartRateSeries(name);
+        xAcceleration = manager.createAccelerationSeries(name);
+        yAcceleration = manager.createAccelerationSeries(name);
+        zAcceleration = manager.createAccelerationSeries(name);
+        mqttData = manager.createMqttData(name);
     }
-
-    public static void main(String[] args) {
-        launch(args);
-    }
-
 }

@@ -27,52 +27,24 @@ import chatservice.MqttChatService;
 import com.google.gson.Gson;
 import java.net.URL;
 import java.util.ResourceBundle;
-import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.chart.LineChart;
-import javafx.scene.chart.PieChart;
-import javafx.scene.chart.XYChart.Series;
 import javafx.scene.chart.XYChart.Data;
 
 public class BiometricsGuiController implements Initializable, MqttChatService.IMqttMessageHandler {
     
-    @FXML private LineChart temperatureChart;
-    @FXML private LineChart heartRateChart;
-    @FXML private LineChart accelerationChart;
-    @FXML private PieChart mqttChart;
-    
-    Series temperature;
-    Series heartRate;
-    Series xAcceleration;
-    Series yAcceleration;
-    Series zAcceleration;
-    
-    int index = 0;
-    
     private MqttChatService chatService;
     Gson gson = new Gson();
-    SeriesManager manager = new SeriesManager();
+    int index = 0;
       
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         chatService = new MqttChatService();
-        chatService.setMessageHandler(this);
-        
-        temperature = manager.createTemperatureSeries("Station 1", temperatureChart);
-        heartRate = manager.createTemperatureSeries("Station 1", heartRateChart);
-        xAcceleration = manager.createTemperatureSeries("Station 1 X", accelerationChart);
-        yAcceleration = manager.createTemperatureSeries("Station 1 Y", accelerationChart);
-        zAcceleration = manager.createTemperatureSeries("Station 1 Z", accelerationChart);
+        chatService.setMessageHandler(this);        
     }
     
     @Override
     public void messageArrived(String channel, String message) {
         BiometricData biometricData = gson.fromJson(message, BiometricData.class);
-        temperature.getData().add(new Data(index, biometricData.getTemperature()));
-        heartRate.getData().add(new Data(index, biometricData.getHeartRate()));
-        xAcceleration.getData().add(new Data(index, biometricData.getAcceleration().getXAcceleration()));
-        yAcceleration.getData().add(new Data(index, biometricData.getAcceleration().getYAcceleration()));
-        zAcceleration.getData().add(new Data(index, biometricData.getAcceleration().getZAcceleration()));
         index++;
     }
 }
