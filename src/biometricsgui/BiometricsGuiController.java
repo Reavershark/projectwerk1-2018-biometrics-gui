@@ -26,25 +26,41 @@ package biometricsgui;
 import chatservice.MqttChatService;
 import com.google.gson.Gson;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javafx.fxml.Initializable;
-import javafx.scene.chart.XYChart.Data;
 
 public class BiometricsGuiController implements Initializable, MqttChatService.IMqttMessageHandler {
     
     private MqttChatService chatService;
-    Gson gson = new Gson();
-    int index = 0;
+    private Gson gson = new Gson();
+    
+    private ArrayList<Station> stations;
+    private int index = 0;
       
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         chatService = new MqttChatService();
-        chatService.setMessageHandler(this);        
+        chatService.setMessageHandler(this);
     }
     
     @Override
     public void messageArrived(String channel, String message) {
-        BiometricData biometricData = gson.fromJson(message, BiometricData.class);
-        index++;
+        BiometricData data = gson.fromJson(message, BiometricData.class);
+        if (getStation(data.getName()) == null) {
+            System.out.println("New station detected!");
+            stations.add(new Station(data.getName()));
+        }
+        Station station = getStation(data.getName());
+        station.addData(data, index);
+    }
+    
+    private Station getStation(String name) {
+        for (int i = 0; i < stations.size(); i++) {
+            if (stations.get(i).getName().equals(name)) {
+                return stations.get(i);
+            }
+        }
+        return null;
     }
 }

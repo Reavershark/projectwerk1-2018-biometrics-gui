@@ -47,6 +47,10 @@ class BiometricData {
     public double getHeartRate() {
         return heartRate;
     }
+    
+    public String getName() {
+        return name;
+    }
 
     //Do not use for data exchange
     @Override

@@ -25,19 +25,20 @@ package biometricsgui;
 
 import javafx.scene.chart.PieChart;
 import javafx.scene.chart.XYChart;
+import javafx.scene.chart.XYChart.Data;
 
 public class Station {
     
-    SeriesManager manager;
+    private SeriesManager manager;
     
-    XYChart.Series temperature;
-    XYChart.Series heartRate;
-    XYChart.Series xAcceleration;
-    XYChart.Series yAcceleration;
-    XYChart.Series zAcceleration;
-    PieChart.Data mqttData;
+    private XYChart.Series temperature;
+    private XYChart.Series heartRate;
+    private XYChart.Series xAcceleration;
+    private XYChart.Series yAcceleration;
+    private XYChart.Series zAcceleration;
+    private PieChart.Data mqttData;
     
-    String name;
+    private String name;
     
     public Station(String name) {
         manager = new SeriesManager();
@@ -49,5 +50,20 @@ public class Station {
         yAcceleration = manager.createAccelerationSeries(name);
         zAcceleration = manager.createAccelerationSeries(name);
         mqttData = manager.createMqttData(name);
+    }
+
+    public String getName() {
+        return name;
+    }
+    
+    public void addData(BiometricData data, int x) {
+        if (data.getName() != name) {
+            return;
+        }
+        temperature.getData().add(new Data(x, data.getTemperature()));
+        xAcceleration.getData().add(new Data(x, data.getTemperature()));
+        yAcceleration.getData().add(new Data(x, data.getTemperature()));
+        zAcceleration.getData().add(new Data(x, data.getTemperature()));
+        mqttData.setPieValue(mqttData.getPieValue() + 1);
     }
 }
